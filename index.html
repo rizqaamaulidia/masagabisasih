@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CanTea - Premium Canned Tea</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --parchment: #F7EFDA;  /* Background Utama */
+            --pistachio: #BADD7F;  /* Aksen Citrus */
+            --melon: #EFACA5;      /* Aksen Peach */
+            --fern-green: #3E8440; /* Warna Utama Brand */
+            
+            --primary-text: #2c3e50;
+            --white: #ffffff;
+            
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Montserrat', sans-serif;
+
+            --shadow-soft: 0 15px 30px rgba(62, 132, 64, 0.1);
+            --shadow-card: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            color: var(--primary-text); 
+            background-color: var(--parchment);
+            line-height: 1.7; 
+            font-family: var(--font-body);
+            overflow-x: hidden; 
+        }
+
+        h1, h2, h3, h4, .logo { font-family: var(--font-heading); color: var(--fern-green); }
+
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed; top: 0; width: 100%; 
+            background: rgba(247, 239, 218, 0.95);
+            backdrop-filter: blur(10px); padding: 15px 50px; display: flex; justify-content: space-between;
+            align-items: center; z-index: 1000; border-bottom: 1px solid rgba(62, 132, 64, 0.05);
+        }
+        .logo { font-size: 2rem; font-weight: 800; letter-spacing: -1px; }
+        .nav-links a { 
+            text-decoration: none; color: var(--fern-green); margin-left: 25px; 
+            font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; 
+            transition: color 0.3s; font-family: var(--font-body);
+        }
+        .nav-links a:hover { color: var(--melon); }
+
+        /* --- HERO SECTION (LAYOUT UPDATE) --- */
+        #home {
+            min-height: 100vh; display: flex; align-items: center; justify-content: space-between;
+            padding: 150px 5% 50px 8%; 
+            position: relative; overflow: hidden;
+        }
+        .hero-bg-shape {
+            position: absolute; top: -20%; right: -15%; width: 70%; height: 140%;
+            background: radial-gradient(circle, var(--pistachio) 0%, transparent 70%);
+            opacity: 0.4; filter: blur(80px); z-index: 0;
+        }
+        .hero-content { flex: 0.8; max-width: 550px; z-index: 1; }
+        .hero-content h1 { font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+        .hero-content h1 span { color: var(--melon); }
+        .hero-content p { font-size: 1.15rem; color: #666; margin-bottom: 40px; }
+        
+        .hero-image-container { 
+            flex: 1.2; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            z-index: 1; 
+            position: relative; 
+        }
+        
+        /* CSS KHUSUS UNTUK GAMBAR FLOWY */
+        .hero-main-img {
+            width: 100%; 
+            max-width: 750px; /* Ukuran besar agar pas */
+            height: auto; 
+            object-fit: contain; 
+            filter: drop-shadow(0 30px 50px rgba(62, 132, 64, 0.25)); 
+            animation: float 6s ease-in-out infinite;
+            /* Blend mode ini bikin background putih di gambar jadi transparan di atas background krem */
+            mix-blend-mode: multiply; 
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-20px) scale(1.02); } }
+        
+        .btn-main { padding: 18px 40px; background: var(--fern-green); color: white; border-radius: 50px; text-decoration: none; font-weight: 700; font-family: var(--font-body); font-size: 1.1rem; box-shadow: var(--shadow-soft); transition: all 0.3s; display: inline-block; border: 2px solid var(--fern-green);}
+        .btn-main:hover { background: transparent; color: var(--fern-green); transform: translateY(-3px); }
+
+        /* --- STATS SECTION --- */
+        #stats {
+            background: var(--white); padding: 60px 20px; display: flex; justify-content: center; 
+            gap: 80px; text-align: center; flex-wrap: wrap; border-top: 2px solid rgba(62, 132, 64, 0.1); 
+            border-bottom: 2px solid rgba(62, 132, 64, 0.1);
+        }
+        .stat-item h3 { font-size: 3rem; font-weight: 800; color: var(--fern-green); margin-bottom: 5px; font-family: var(--font-heading); }
+        .stat-item p { font-size: 1rem; letter-spacing: 1px; color: var(--pistachio); font-weight: 700; text-transform: uppercase; }
+
+        /* --- PRODUCT SECTION --- */
+        #product { padding: 120px 20px; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-header h2 { font-size: 3.5rem; margin-bottom: 10px; }
+        .product-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .product-card {
+            border-radius: 30px; width: 320px; background: var(--white); text-align: center;
+            transition: all 0.4s ease; position: relative; overflow: hidden;
+            box-shadow: var(--shadow-card); display: flex; flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-15px); box-shadow: var(--shadow-soft); }
+        .img-container { width: 100%; height: 300px; display: flex; align-items: center; justify-content: center; overflow: hidden; background-color: #f4f4f4; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .product-card:hover .product-img { transform: scale(1.1); }
+        .card-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: var(--white); z-index: 1;}
+        .product-card h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
+        .card-matcha h3 { color: var(--fern-green); } .card-peach h3 { color: var(--melon); } .card-citrus h3 { color: var(--pistachio); }
+        .product-desc { font-size: 0.95rem; color: #777; margin-bottom: 20px; font-weight: 500; }
+        .price-tag { font-size: 1.5rem; font-weight: 800; display: block; margin-bottom: 25px; color: var(--fern-green); font-family: var(--font-body); }
+        .btn-buy { padding: 15px 30px; border: none; border-radius: 15px; font-weight: 700; cursor: pointer; width: 100%; transition: all 0.3s; font-size: 1rem; font-family: var(--font-body); }
+        .card-matcha .btn-buy { background: var(--fern-green); color: white; }
+        .card-peach .btn-buy { background: var(--melon); color: var(--fern-green); }
+        .card-citrus .btn-buy { background: var(--pistachio); color: var(--fern-green); }
+        .btn-buy:hover { opacity: 0.9; transform: scale(1.02); }
+
+        /* --- NUTRITION SECTION --- */
+        #nutrition { padding: 80px 20px; background: var(--white); }
+        .nutrition-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 50px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .nutri-card { flex: 1; min-width: 200px; padding: 30px; border-radius: 20px; background: var(--parchment); text-align: center; border: 1px dashed var(--fern-green); transition: transform 0.3s; }
+        .nutri-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-card); }
+        .nutri-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        .nutri-val { font-size: 2rem; font-weight: 800; color: var(--fern-green); font-family: var(--font-heading); }
+        .nutri-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #666; font-weight: 600; }
+
+        /* --- RITUAL --- */
+        #ritual { padding: 100px 20px; background: var(--parchment); text-align: center; }
+        .ritual-grid { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin-top: 50px; }
+        .ritual-step { width: 250px; }
+        .step-icon { 
+            width: 100px; height: 100px; background: var(--white); border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            font-size: 3rem; color: var(--fern-green); border: 2px solid var(--pistachio);
+        }
+        .ritual-step h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .ritual-step p { font-size: 0.95rem; color: #666; }
+
+        /* --- INNOVATION SECTION --- */
+        #about { padding: 0 0 100px 0; background-color: var(--fern-green); color: var(--parchment); position: relative; }
+        .wave-divider { display: block; width: 100%; height: auto; fill: var(--parchment); }
+        #about .section-header h2 { color: var(--pistachio); }
+        #about .section-header p { color: rgba(255,255,255,0.8); }
+        .features-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        .feature-item { background: rgba(255,255,255,0.05); padding: 40px 30px; border-radius: 30px; width: 300px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease; }
+        .feature-item:hover { transform: translateY(-10px); background: rgba(255,255,255,0.1); }
+        .feature-icon { font-size: 3.5rem; margin-bottom: 25px; display: inline-block; }
+        .feature-item h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; color: var(--parchment); }
+        .feature-item p { font-size: 1rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
+
+        /* --- STORE LOCATOR --- */
+        #locations { padding: 80px 20px; background: var(--white); text-align: center; }
+        .partners-logo { display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; opacity: 0.8; }
+        .partner-box { padding: 15px 30px; background: var(--parchment); border-radius: 15px; font-weight: 700; color: var(--fern-green); border: 2px solid #eee; font-size: 1.1rem; transition: 0.3s; cursor: default;}
+        .partner-box:hover { border-color: var(--fern-green); transform: scale(1.05); }
+
+        /* --- MOMENTS GALLERY --- */
+        #gallery { padding: 100px 20px; background: var(--parchment); text-align: center; }
+        .gallery-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; max-width: 1000px; margin: 40px auto 0; 
+        }
+        .gallery-item { 
+            height: 300px; border-radius: 20px; overflow: hidden; position: relative; cursor: pointer; background-color: #e0e0e0;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .gallery-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(62, 132, 64, 0.4); opacity: 0; transition: opacity 0.3s;
+            display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+        /* --- TESTIMONIALS --- */
+        #testimonials { padding: 100px 20px; background: var(--white); }
+        .testi-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .testi-card { background: var(--parchment); padding: 40px; border-radius: 30px; width: 350px; box-shadow: var(--shadow-card); text-align: left; }
+        .testi-text { font-style: italic; color: #555; margin-bottom: 25px; font-size: 1.1rem; font-family: var(--font-heading); line-height: 1.6;}
+        .testi-user { font-weight: 700; color: var(--fern-green); display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 50px; height: 50px; border-radius: 50%; display: inline-block; }
+
+        /* --- FAQ --- */
+        #faq { padding: 100px 20px; max-width: 800px; margin: 0 auto; }
+        .faq-item { background: var(--white); margin-bottom: 20px; padding: 30px; border-radius: 20px; border: 1px solid rgba(62, 132, 64, 0.1); box-shadow: var(--shadow-card); }
+        .faq-question { font-weight: 800; color: var(--fern-green); margin-bottom: 10px; font-size: 1.2rem; font-family: var(--font-heading); }
+        .faq-answer { color: #666; font-size: 1rem; }
+
+        /* --- PARTNERSHIP --- */
+        #partnership { padding: 100px 20px; background: var(--white); text-align: center; }
+        .form-container { max-width: 600px; margin: 0 auto; background: var(--parchment); padding: 50px; border-radius: 30px; text-align: left; box-shadow: var(--shadow-soft); }
+        .form-group { margin-bottom: 20px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid rgba(62, 132, 64, 0.1); margin-top: 5px; background: var(--white); color: var(--primary-text); font-family: var(--font-body);}
+        .btn-submit { width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; border: none; background: var(--fern-green); color: var(--parchment); transition: all 0.3s; font-size: 1.1rem; font-family: var(--font-body);}
+        .btn-submit:hover { background: var(--pistachio); color: var(--fern-green); }
+
+        /* --- SUBSCRIBE --- */
+        #subscribe { padding: 80px 20px; background: var(--fern-green); text-align: center; color: var(--parchment); }
+        .sub-container { max-width: 500px; margin: 0 auto; }
+        .sub-input-group { display: flex; gap: 10px; margin-top: 30px; }
+        .sub-input { flex: 1; padding: 15px; border-radius: 50px; border: none; outline: none; }
+        .sub-btn { padding: 15px 30px; background: var(--melon); color: var(--fern-green); font-weight: bold; border-radius: 50px; border: none; cursor: pointer; transition: 0.3s; }
+        .sub-btn:hover { background: var(--pistachio); }
+
+        /* --- FOOTER --- */
+        footer { background: var(--fern-green); padding: 50px; text-align: center; font-size: 1rem; color: var(--parchment); border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        /* --- SCROLL TO TOP --- */
+        #scrollTopBtn {
+            display: none; position: fixed; bottom: 30px; right: 30px; z-index: 99;
+            font-size: 1.5rem; border: none; outline: none; background-color: var(--melon);
+            color: var(--fern-green); cursor: pointer; padding: 15px; border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s;
+        }
+        #scrollTopBtn:hover { background-color: var(--pistachio); transform: translateY(-5px); }
+
+        /* --- MODAL --- */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(62, 132, 64, 0.6); align-items: center; justify-content: center; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s ease; }
+        .modal.show { display: flex; opacity: 1; }
+        .modal-content { background: var(--white); padding: 35px; border-radius: 30px; width: 90%; max-width: 420px; position: relative; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal.show .modal-content { transform: scale(1); }
+        .close-btn { position: absolute; top: 20px; right: 25px; cursor: pointer; font-size: 1.5rem; color: #ccc; transition: color 0.3s; }
+        .close-btn:hover { color: var(--fern-green); }
+        .modal-header h2 { font-size: 1.8rem; color: var(--fern-green); margin-bottom: 25px; font-weight: 800; }
+        .modal-product-summary { display: flex; align-items: center; background: var(--parchment); padding: 15px; border-radius: 20px; text-align: left; margin-bottom: 25px; }
+        .modal-thumb { width: 70px; height: 70px; border-radius: 15px; object-fit: cover; margin-right: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background-color: #fff;}
+        .modal-details h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; color: var(--fern-green); }
+        .modal-details p { color: #666; font-size: 0.9rem; }
+        .qty-control { display: flex; align-items: center; justify-content: center; margin-bottom: 30px; gap: 15px; }
+        .btn-qty { width: 40px; height: 40px; border-radius: 12px; border: 2px solid var(--pistachio); background: white; font-size: 1.2rem; color: var(--fern-green); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn-qty:hover { border-color: var(--fern-green); background: var(--fern-green); color: white; }
+        .input-qty { width: 50px; text-align: center; border: none; font-size: 1.3rem; font-weight: 800; color: var(--fern-green); pointer-events: none; font-family: var(--font-body); }
+        .modal-footer { border-top: 1px solid #eee; padding-top: 20px; }
+        .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .total-label { font-weight: 600; color: #888; font-size: 1.1rem;}
+        .total-price { font-size: 1.8rem; font-weight: 900; color: var(--melon); font-family: var(--font-body); }
+        .btn-checkout-modal { width: 100%; padding: 15px; border-radius: 15px; background: var(--fern-green); color: white; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; box-shadow: 0 10px 20px rgba(62, 132, 64, 0.3); transition: transform 0.2s; font-family: var(--font-body); }
+        .btn-checkout-modal:hover { transform: translateY(-3px); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) { 
+            nav { padding: 15px 20px; }
+            .nav-links { display: none; } 
+            #home { flex-direction: column-reverse; padding-top: 100px; text-align: center; padding-left: 20px; padding-right: 20px;}
+            .hero-content { margin-top: 40px; }
+            .hero-image-container { width: 100%; }
+            .hero-content h1 { font-size: 3rem; }
+            .product-card { width: 100%; max-width: 380px; } 
+            #stats { gap: 40px; padding: 40px 20px;} 
+            .stat-item h3 { font-size: 2.5rem; }
+            .sub-input-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="scrollToTop()" id="scrollTopBtn" title="Go to top">↑</button>
+
+    <nav>
+        <div class="logo">CanTea.</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#product">Flavors</a>
+            <a href="#nutrition">Benefits</a>
+            <a href="#ritual">Ritual</a>
+            <a href="#gallery">Moments</a>
+            <a href="#partnership">Partner</a>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div class="hero-bg-shape"></div>
+        <div class="hero-content">
+            <h1>Sip the <span>Joy</span><br>Inside the Can.</h1>
+            <p>Temukan kesegaran teh asli dengan buah asli. Tanpa pengawet, penuh rasa, dan siap menemanimu kapan saja.</p>
+            <a href="#product" class="btn-main">Explore Flavors</a>
+        </div>
+        <div class="hero-image-container">
+            <img src="splash homepage.png" alt="CanTea Splash" class="hero-main-img" onerror="handleImageError(this)">
+        </div>
+    </header>
+
+    <div id="stats">
+        <div class="stat-item">
+            <h3>500k+</h3>
+            <p>Kaleng Terjual</p>
+        </div>
+        <div class="stat-item">
+            <h3>50+</h3>
+            <p>Kota di Indonesia</p>
+        </div>
+        <div class="stat-item">
+            <h3>4.9/5</h3>
+            <p>Rating Pelanggan</p>
+        </div>
+    </div>
+
+    <section id="product">
+        <div class="section-header">
+            <h2>Pick Your Vibe</h2>
+            <p style="color: #666;">Pilih rasa yang sesuai dengan mood kamu hari ini.</p>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card card-matcha">
+                <div class="img-container">
+                    <img src="Gemini_Generated_Image_x2eo48x2eo48x2eo.png" alt="Zen Matcha Latte" class="product-img" onerror="handleImageError(this)">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h3>Zen Matcha Latte</h3>
+                        <p class="product-desc">Authentic Japanese Matcha dengan sentuhan susu yang creamy dan lembut.</p>
+                    </div>
+                    <div>
+                        <span class="price-tag">Rp 18.000</span>
+                        <button class="btn-buy" onclick="openModal('Zen Matcha Latte', 18000, this.closest('.product-card').querySelector('img').src)">Add to Bag</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card card-peach">
+                <div class="img-container">
+                    <img src="Gemini_Generated_Image_n4mz77n4mz77n4mz.png" alt="Royal Peach Tea" class="product-img" onerror="handleImageError(this)">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h3>Royal Peach Tea</h3>
+                        <p class="product-desc">Premium Black Tea yang diseduh dengan nektar buah persik manis.</p>
+                    </div>
+                    <div>
+                        <span class="price-tag">Rp 15.000</span>
+                        <button class="btn-buy" onclick="openModal('Royal Peach Tea', 15000, this.closest('.product-card').querySelector('img').src)">Add to Bag</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card card-citrus">
+                <div class="img-container">
+                    <img src="Gemini_Generated_Image_tk3wo0tk3wo0tk3w.png" alt="Citrus Spark Oolong" class="product-img" onerror="handleImageError(this)">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h3>Citrus Spark</h3>
+                        <p class="product-desc">Zesty Oolong Tea dengan tendangan segar dari lemon asli.</p>
+                    </div>
+                    <div>
+                        <span class="price-tag">Rp 15.000</span>
+                        <button class="btn-buy" onclick="openModal('Citrus Spark', 15000, this.closest('.product-card').querySelector('img').src)">Add to Bag</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="nutrition">
+        <div class="section-header">
+            <h2>Guilt-Free Goodness</h2>
+            <p>Enak gak harus dosa. Nikmati kebaikan di setiap kaleng.</p>
+        </div>
+        <div class="nutrition-grid">
+            <div class="nutri-card">
+                <span class="nutri-icon">🔥</span>
+                <span class="nutri-val">&lt;90</span>
+                <span class="nutri-label">Kalori per Kaleng</span>
+            </div>
+            <div class="nutri-card">
+                <span class="nutri-icon">🍬</span>
+                <span class="nutri-val">Low</span>
+                <span class="nutri-label">Gula Tebu Asli</span>
+            </div>
+            <div class="nutri-card">
+                <span class="nutri-icon">🌱</span>
+                <span class="nutri-val">100%</span>
+                <span class="nutri-label">Vegan Friendly</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="ritual">
+        <div class="section-header">
+            <h2>The Perfect Serve</h2>
+            <p>Cara terbaik menikmati kesegaran CanTea.</p>
+        </div>
+        <div class="ritual-grid">
+            <div class="ritual-step">
+                <div class="step-icon">❄️</div>
+                <h3>Chill It</h3>
+                <p>Simpan di kulkas minimal 3 jam untuk rasa maksimal.</p>
+            </div>
+            <div class="ritual-step">
+                <div class="step-icon">👋</div>
+                <h3>Shake It</h3>
+                <p>Kocok perlahan agar rasa buah dan teh menyatu sempurna.</p>
+            </div>
+            <div class="ritual-step">
+                <div class="step-icon">🥂</div>
+                <h3>Sip It</h3>
+                <p>Buka kalengnya dan nikmati langsung atau tuang ke gelas es.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <svg class="wave-divider" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,117.3C960,139,1056,181,1152,186.7C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
+        <div class="section-header" style="margin-top: 40px;">
+            <h2 style="color: var(--pistachio);">The CanTea Difference</h2>
+            <p>Bukan sekadar teh kalengan biasa. Ini komitmen kami.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">❄️</div>
+                <h3>Cold Aseptic Tech</h3>
+                <p>Teknologi pengisian dingin canggih yang menjaga nutrisi dan aroma asli teh tetap terjaga tanpa bahan pengawet sedikitpun.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🍃</div>
+                <h3>100% Real Leaves</h3>
+                <p>Diseduh langsung dari daun teh pilihan petani lokal terbaik, bukan dari ekstrak bubuk instan. Rasa otentik di setiap tegukan.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">♻️</div>
+                <h3>Eco-Friendly Can</h3>
+                <p>Kami peduli bumi. Kemasan kaleng aluminium CanTea 100% dapat didaur ulang. Nikmati kesegaranmu sambil menjaga lingkungan.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="locations">
+        <div class="section-header">
+            <h2>Find Us Nearby</h2>
+            <p>Tersedia di supermarket dan minimarket kesayanganmu.</p>
+        </div>
+        <div class="partners-logo">
+            <div class="partner-box">Indomaret</div>
+            <div class="partner-box">Alfamart</div>
+            <div class="partner-box">Superindo</div>
+            <div class="partner-box">Hypermart</div>
+            <div class="partner-box">Farmers Market</div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="section-header">
+            <h2>#CanTeaMoments</h2>
+            <p>Teman setia di setiap momen seru kamu.</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Picnic Vibes" onerror="handleImageError(this)">
+                <div class="gallery-overlay">Picnic Vibes</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Chill & Read" onerror="handleImageError(this)">
+                <div class="gallery-overlay">Chill & Read</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1530103862676-de3c9da59af7?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Party Time" onerror="handleImageError(this)">
+                <div class="gallery-overlay">Party Time</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Besties" onerror="handleImageError(this)">
+                <div class="gallery-overlay">Besties</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <div class="section-header">
+            <h2>Words from Sippers</h2>
+            <p style="color: #666;">Apa kata mereka tentang kesegaran CanTea?</p>
+        </div>
+        <div class="testi-grid">
+            <div class="testi-card">
+                <p class="testi-text">"Gila sih, rasa Matcha-nya gak main-main. Creamy tapi gak bikin eneg. Fix bakal stok di kulkas buat nemenin kerja!"</p>
+                <div class="testi-user">
+                    <div class="avatar" style="background-color: var(--fern-green);"></div>
+                    <span>Sarah, Jakarta</span>
+                </div>
+            </div>
+            <div class="testi-card">
+                <p class="testi-text">"Paling susah cari Peach Tea yang gak rasa sabun. Akhirnya nemu CanTea! Manisnya pas, wanginya enak banget."</p>
+                <div class="testi-user">
+                    <div class="avatar" style="background-color: var(--melon);"></div>
+                    <span>Budi, Surabaya</span>
+                </div>
+            </div>
+            <div class="testi-card">
+                <p class="testi-text">"Abis sepedaan minum yang Lemon (Citrus Spark) langsung melek lagi. Segernya nendang poll!"</p>
+                <div class="testi-user">
+                    <div class="avatar" style="background-color: var(--pistachio);"></div>
+                    <span>Dian, Bandung</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Apakah CanTea menggunakan pengawet?</div>
+            <div class="faq-answer">Tidak! Kami menggunakan teknologi Cold Aseptic Filling sehingga teh tetap awet dan segar tanpa tambahan bahan pengawet buatan.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Apakah aman untuk lambung?</div>
+            <div class="faq-answer">Tentu saja. Kami menggunakan daun teh pilihan dengan tingkat keasaman yang seimbang, sehingga nyaman di lambung.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Berapa lama tahan di suhu ruang?</div>
+            <div class="faq-answer">Dalam kondisi kaleng tertutup, CanTea tahan hingga 12 bulan di suhu ruang yang sejuk. Setelah dibuka, harap segera habiskan.</div>
+        </div>
+    </section>
+
+    <section id="partnership">
+        <div class="section-header" style="position: relative; z-index: 1;">
+            <h2 style="color: var(--fern-green);">Let's Collaborate</h2>
+            <p style="color: #666;">Jadilah bagian dari perjalanan kami.</p>
+        </div>
+        <div class="form-container">
+            <form onsubmit="event.preventDefault(); alert('Terima kasih! Kami akan menghubungi Anda.');">
+                <div class="form-group">
+                    <input type="text" placeholder="Nama Anda" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Alamat Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="3" placeholder="Pesan Anda"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">KIRIM PESAN</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="subscribe">
+        <div class="sub-container">
+            <h2 style="color: var(--parchment);">Don't Miss the Sip</h2>
+            <p>Dapatkan info promo eksklusif dan varian rasa baru langsung di inbox kamu.</p>
+            <div class="sub-input-group">
+                <input type="email" class="sub-input" placeholder="Masukkan email kamu...">
+                <button class="sub-btn">SUBSCRIBE</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 CanTea Indonesia. Crafted with ❤️ and Real Tea Leaves.</p>
+    </footer>
+
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h2>Your Order</h2>
+            </div>
+            <div class="modal-product-summary">
+                <img id="modal-img" src="" alt="Product" class="modal-thumb" onerror="handleImageError(this)">
+                <div class="modal-details">
+                    <h3 id="modal-product-name">Product Name</h3>
+                    <p id="modal-product-price">@ Rp 0</p>
+                </div>
+            </div>
+            <div class="qty-control">
+                <button type="button" class="btn-qty" onclick="changeQty(-1)">−</button>
+                <input type="text" id="qty" value="1" class="input-qty" readonly>
+                <button type="button" class="btn-qty" onclick="changeQty(1)">+</button>
+            </div>
+            <div class="modal-footer">
+                <div class="total-row">
+                    <span class="total-label">Total Payment</span>
+                    <span id="modal-total-price" class="total-price">Rp 0</span>
+                </div>
+                <button class="btn-checkout-modal" onclick="handleCheckout()">Checkout Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --- IMAGE ERROR HANDLER --- */
+        function handleImageError(image) {
+            console.log("Gambar gagal dimuat, pakai placeholder:", image.src);
+            const text = image.alt || "Product";
+            image.src = `https://placehold.co/600x600/3E8440/FFFFFF?text=${encodeURIComponent(text)}`;
+            image.onerror = null; 
+        }
+
+        window.addEventListener('load', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.naturalWidth === 0 && img.getAttribute('onerror')) {
+                    handleImageError(img);
+                }
+            });
+        });
+
+        /* --- MODAL LOGIC --- */
+        const modal = document.getElementById("checkoutModal");
+        const nameEl = document.getElementById("modal-product-name");
+        const priceEl = document.getElementById("modal-product-price");
+        const totalEl = document.getElementById("modal-total-price");
+        const qtyInput = document.getElementById("qty");
+        const imgEl = document.getElementById("modal-img");
+        
+        let currentPrice = 0;
+
+        function openModal(name, price, imgSrc) {
+            modal.classList.add("show");
+            nameEl.innerText = name;
+            priceEl.innerText = "@ Rp " + price.toLocaleString('id-ID');
+            currentPrice = price;
+            imgEl.onerror = function() { handleImageError(this); };
+            imgEl.src = imgSrc;
+            qtyInput.value = 1;
+            updateTotal();
+        }
+
+        function closeModal() {
+            modal.classList.remove("show");
+        }
+
+        function changeQty(amount) {
+            let currentQty = parseInt(qtyInput.value);
+            let newQty = currentQty + amount;
+            if (newQty < 1) newQty = 1;
+            qtyInput.value = newQty;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let qty = parseInt(qtyInput.value);
+            totalEl.innerText = "Rp " + (currentPrice * qty).toLocaleString('id-ID');
+        }
+
+        function handleCheckout() {
+            alert("Terima kasih! Pesanan " + nameEl.innerText + " (" + qtyInput.value + " items) berhasil dibuat.");
+            closeModal();
+        }
+
+        window.onclick = function(e) { if (e.target == modal) closeModal(); }
+
+        /* --- SCROLL TOP --- */
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollBtn.style.display = "block";
+            } else {
+                scrollBtn.style.display = "none";
+            }
+        };
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
